@@ -23,6 +23,6 @@ So far, Battletanks has only been built and tested on Linux.
 
 * Follow the steps under [Running](#running)
 * Enter the virtual environment: `source .venv/bin/activate` (Mac/Linux with zsh/bash) or `.venv\Scripts\activate` (Windows with PowerShell)
-* Build Battletanks: `pyinstaller --onefile src/main.py`
+* Build Battletanks: `pyinstaller --onefile src/main.py --name battletanks`
 
 To exit the virtual environment, run `deactivate`

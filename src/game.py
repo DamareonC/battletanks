@@ -4,19 +4,25 @@ import typing
 
 import pygame
 
+import player
+
+
 class Game:
     def __init__(self):
         pygame.init()
 
         self.screen: pygame.Surface = pygame.display.set_mode(size=(640, 480))
 
-        self.NS_PER_UPDATE: typing.Final[float] = 1000000000.0 / 60.0
-        self.last_time_ns: int = time.time_ns()
-        self.delta_time: float = 0.0
+        self.player: player.Player = player.Player()
+
+        pygame.display.set_caption("Battletanks")
 
         self.run()
 
     def run(self):
+        ns_per_update: typing.Final[float] = 1000000000.0 / 60.0
+        last_time_ns: int = time.time_ns()
+        delta_time: float = 0.0
         current_time_ns: int
 
         while True:
@@ -26,12 +32,12 @@ class Game:
                     sys.exit()
 
             current_time_ns = time.time_ns()
-            self.delta_time += (current_time_ns - self.last_time_ns) / self.NS_PER_UPDATE
-            self.last_time_ns = current_time_ns
+            delta_time += (current_time_ns - last_time_ns) / ns_per_update
+            last_time_ns = current_time_ns
 
-            if self.delta_time >= 1:
+            if delta_time >= 1:
                 self.update()
-                self.delta_time -= 1
+                delta_time -= 1
 
             self.screen.fill(color=(0, 0, 0))
 
@@ -43,4 +49,4 @@ class Game:
         pass
 
     def render(self):
-        pass
+        self.screen.blit(source=self.player.get_surface())
