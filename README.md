@@ -15,9 +15,11 @@ So far, Battletanks has only been built and tested on Linux.
 
 1. Clone Battletanks: `git clone https://github.com/DamareonC/battletanks`
 2. Move to Battletanks directory: `cd battletanks`
-3. Run Battletanks: `uv run src/main.py`*
+3. Run Battletanks: `uv run src/main.py --no-dev`*
 
-*To just set up for building from source, run `uv sync`
+*To just set up for building from source, run `uv sync --no-dev`
+
+For development, omit the `--no-dev` flag
 
 ### Building from source
 

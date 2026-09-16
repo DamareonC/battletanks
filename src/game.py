@@ -4,7 +4,7 @@ import typing
 
 import pygame
 
-import player
+from player import Player
 
 
 class Game:
@@ -13,7 +13,8 @@ class Game:
 
         self.screen: pygame.Surface = pygame.display.set_mode(size=(640, 480))
 
-        self.player: player.Player = player.Player()
+        self.player: Player = Player()
+        self.sprite_group = pygame.sprite.Group(self.player)
 
         pygame.display.set_caption("Battletanks")
 
@@ -39,14 +40,14 @@ class Game:
                 self.update()
                 delta_time -= 1
 
-            self.screen.fill(color=(0, 0, 0))
+            self.screen.fill(color=(64, 64, 64))
 
             self.render()
 
             pygame.display.flip()
 
     def update(self):
-        pass
+        self.sprite_group.update()
 
     def render(self):
-        self.screen.blit(source=self.player.get_surface())
+        self.sprite_group.draw(self.screen)
