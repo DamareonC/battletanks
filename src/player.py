@@ -1,6 +1,9 @@
 import os
+import typing
 
 import pygame
+
+from bullet import Bullet
 
 
 class Player(pygame.sprite.Sprite):
@@ -12,8 +15,9 @@ class Player(pygame.sprite.Sprite):
         ).convert_alpha()
         self.image: pygame.Surface = self.original_image
         self.rect: pygame.Rect = self.image.get_rect()
-        self.speed: int = 2
+        self.speed: typing.Final[int] = 2
         self.angle: int = 0
+        self.updates: int = 0
 
     def update(self):
         keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
@@ -46,3 +50,17 @@ class Player(pygame.sprite.Sprite):
 
         self.image = pygame.transform.rotozoom(self.original_image, self.angle, 1)
         self.rect = self.image.get_rect(center=self.rect.center)
+
+        if self.updates > 0:
+            self.updates -= 1
+
+        if keys[pygame.K_SPACE] and self.updates == 0:
+            self.groups()[0].add(
+                Bullet(
+                    self.rect.center[0],
+                    self.rect.center[1],
+                    self.angle,
+                    self.rect.width,
+                )
+            )
+            self.updates = 60

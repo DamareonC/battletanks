@@ -14,7 +14,9 @@ class Game:
         self.screen: pygame.Surface = pygame.display.set_mode(size=(640, 480))
 
         self.player: Player = Player()
-        self.sprite_group = pygame.sprite.Group(self.player)
+        self.sprite_group: pygame.sprite.Group[pygame.sprite.Sprite] = (
+            pygame.sprite.Group[pygame.sprite.Sprite](self.player)
+        )
 
         pygame.display.set_caption("Battletanks")
 
