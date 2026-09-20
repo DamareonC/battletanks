@@ -19,7 +19,7 @@ class Bullet(pygame.sprite.Sprite):
         self.speed: typing.Final[int] = 5
         self.x_speed: int = 0
         self.y_speed: int = 0
-        self.updates: int = 300
+        self.updates: int = 180
 
         match angle:
             case 0:

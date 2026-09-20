@@ -5,6 +5,8 @@ import pygame
 
 from bullet import Bullet
 
+SpriteGroup: typing.TypeAlias = pygame.sprite.Group[pygame.sprite.Sprite]
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -15,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         ).convert_alpha()
         self.image: pygame.Surface = self.original_image
         self.rect: pygame.Rect = self.image.get_rect()
+        self.bullet_group: SpriteGroup = SpriteGroup()
         self.speed: typing.Final[int] = 2
         self.angle: int = 0
         self.updates: int = 0
@@ -55,7 +58,7 @@ class Player(pygame.sprite.Sprite):
             self.updates -= 1
 
         if keys[pygame.K_SPACE] and self.updates == 0:
-            self.groups()[0].add(
+            self.bullet_group.add(
                 Bullet(
                     self.rect.center[0],
                     self.rect.center[1],
@@ -64,3 +67,6 @@ class Player(pygame.sprite.Sprite):
                 )
             )
             self.updates = 60
+
+    def set_bullet_group(self, bullet_group: SpriteGroup):
+        self.bullet_group = bullet_group

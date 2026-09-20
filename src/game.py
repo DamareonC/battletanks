@@ -5,6 +5,9 @@ import typing
 import pygame
 
 from player import Player
+from spawner import Spawner
+
+SpriteGroup: typing.TypeAlias = pygame.sprite.Group[pygame.sprite.Sprite]
 
 
 class Game:
@@ -14,11 +17,14 @@ class Game:
         self.screen: pygame.Surface = pygame.display.set_mode(size=(640, 480))
 
         self.player: Player = Player()
-        self.sprite_group: pygame.sprite.Group[pygame.sprite.Sprite] = (
-            pygame.sprite.Group[pygame.sprite.Sprite](self.player)
-        )
+        self.bullet_group: SpriteGroup = SpriteGroup()
+        self.tank_group: SpriteGroup = SpriteGroup(self.player)
+
+        self.spawner: Spawner = Spawner(self.tank_group)
 
         pygame.display.set_caption("Battletanks")
+
+        self.player.set_bullet_group(self.bullet_group)
 
         self.run()
 
@@ -49,7 +55,11 @@ class Game:
             pygame.display.flip()
 
     def update(self):
-        self.sprite_group.update()
+        self.bullet_group.update()
+        self.tank_group.update()
+
+        self.spawner.update()
 
     def render(self):
-        self.sprite_group.draw(self.screen)
+        self.bullet_group.draw(surface=self.screen)
+        self.tank_group.draw(surface=self.screen)
