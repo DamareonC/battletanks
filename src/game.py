@@ -34,6 +34,10 @@ class Game:
         delta_time: float = 0.0
         current_time_ns: int
 
+        timer: float | int = time.time()
+        updates: int = 0
+        frames: int = 0
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -47,12 +51,20 @@ class Game:
             if delta_time >= 1:
                 self.update()
                 delta_time -= 1
+                updates += 1
 
             self.screen.fill((64, 64, 64))
 
             self.render()
+            frames += 1
 
             pygame.display.flip()
+
+            if time.time() - timer > 1:
+                timer += 1
+                pygame.display.set_caption(f"Battletanks | {updates}ups, {frames}fps")
+                updates = 0
+                frames = 0
 
     def update(self):
         self.bullet_group.update()
