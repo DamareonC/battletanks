@@ -14,13 +14,13 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.screen: pygame.Surface = pygame.display.set_mode(size=(640, 480))
+        self.screen: pygame.Surface = pygame.display.set_mode((640, 480))
 
         self.player: Player = Player()
         self.bullet_group: SpriteGroup = SpriteGroup()
         self.tank_group: SpriteGroup = SpriteGroup(self.player)
 
-        self.spawner: Spawner = Spawner(self.tank_group)
+        self.spawner: Spawner = Spawner(self.tank_group, self.bullet_group)
 
         pygame.display.set_caption("Battletanks")
 
@@ -48,7 +48,7 @@ class Game:
                 self.update()
                 delta_time -= 1
 
-            self.screen.fill(color=(64, 64, 64))
+            self.screen.fill((64, 64, 64))
 
             self.render()
 
@@ -61,5 +61,5 @@ class Game:
         self.spawner.update()
 
     def render(self):
-        self.bullet_group.draw(surface=self.screen)
-        self.tank_group.draw(surface=self.screen)
+        self.bullet_group.draw(self.screen)
+        self.tank_group.draw(self.screen)

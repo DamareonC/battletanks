@@ -6,16 +6,17 @@ import pygame
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(
-        self, x: int | float, y: int | float, angle: int, player_width: int | float
+        self, x: int | float, y: int | float, angle: int, player_width: int | float, owner: pygame.sprite.Sprite
     ):
         super().__init__()
 
         self.original_image: pygame.Surface = pygame.image.load(
-            file=os.path.join(os.getcwd(), "res/textures/bullet.png")
+            os.path.join(os.getcwd(), "res/textures/bullet.png")
         ).convert_alpha()
         self.image: pygame.Surface = pygame.transform.rotozoom(
             self.original_image, angle, 1
         )
+        self.owner: pygame.sprite.Sprite = owner
         self.speed: typing.Final[int] = 5
         self.x_speed: int = 0
         self.y_speed: int = 0
@@ -71,3 +72,6 @@ class Bullet(pygame.sprite.Sprite):
 
         if self.updates == 0:
             self.kill()
+
+    def get_owner(self) -> pygame.sprite.Sprite:
+        return self.owner

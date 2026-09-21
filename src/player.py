@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         self.original_image: pygame.Surface = pygame.image.load(
-            file=os.path.join(os.getcwd(), "res/textures/player.png")
+            os.path.join(os.getcwd(), "res/textures/player.png")
         ).convert_alpha()
         self.image: pygame.Surface = self.original_image
         self.rect: pygame.Rect = self.image.get_rect()
@@ -64,6 +64,7 @@ class Player(pygame.sprite.Sprite):
                     self.rect.center[1],
                     self.angle,
                     self.rect.width,
+                    self
                 )
             )
             self.updates = 60
